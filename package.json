@@ -6,7 +6,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    
     "build": "nest build && copyfiles -u 1 src/**/*.html dist/",
+    "vercel-build": "npm run build && cp -R src/templates dist/src/",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
