@@ -26,8 +26,9 @@ export class TemplateService implements OnModuleInit {
   }
 
   private async loadTemplates() {
-    const templateDir = path.join(process.cwd(), 'src', 'templates');
+    const templateDir = path.join(__dirname, '..', 'templates');
     const templateFiles = ['GEO.html', 'MGA.html', 'PBM.html'];
+    this.logger.log(`Template directory: ${templateDir}`);
 
     for (const file of templateFiles) {
       try {
