@@ -26,18 +26,29 @@ export class TemplateService implements OnModuleInit {
   }
 
   private async loadTemplates() {
-    const templateDir = path.join(__dirname, '..', 'templates');
+    let templateDir: string;
+    if (process.env.NODE_ENV === 'production') {
+      templateDir = path.join(process.cwd(), 'dist', 'templates');
+    } else {
+      templateDir = path.join(process.cwd(), 'src', 'templates');
+    }
+    
+    this.logger.log(`Loading templates from: ${templateDir}`);
     const templateFiles = ['GEO.html', 'MGA.html', 'PBM.html'];
-    this.logger.log(`Template directory: ${templateDir}`);
 
     for (const file of templateFiles) {
       try {
-        const content = await fs.readFile(path.join(templateDir, file), 'utf-8');
+        const filePath = path.join(templateDir, file);
+        this.logger.log(`Attempting to load template: ${filePath}`);
+        const content = await fs.readFile(filePath, 'utf-8');
         this.templates[file.split('.')[0]] = content;
+        this.logger.log(`Successfully loaded template: ${file}`);
       } catch (error) {
         this.logger.error(`Failed to load template ${file}`, error.stack);
       }
     }
+
+    this.logger.log(`Loaded templates: ${Object.keys(this.templates).join(', ')}`);
   }
 
   getTemplate(country: string): string {
