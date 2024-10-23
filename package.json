@@ -10,12 +10,7 @@
     "build": "nest build && copyfiles -u 1 src/**/*.html dist/",
     "vercel-build": "npm run build && cp -R src/templates dist/src/",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    
-
-       
-       "start": "node dist/main",
-       
-
+    "start": "node dist/main",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
