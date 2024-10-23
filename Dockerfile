@@ -5,7 +5,13 @@ FROM node:18
 RUN apt-get update && apt-get install -y \
   wget \
   gnupg \
-  --no-install-recommends \
+  ca-certificates \
+    --no-install-recommends && \
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && \
+    apt-get install -y \
+    google-chrome-stable \
   fonts-liberation \
   libappindicator3-1 \
   libatk-bridge2.0-0 \

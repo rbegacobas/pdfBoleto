@@ -9,7 +9,7 @@ export class PdfGeneratorUtil {
     let browser: puppeteer.Browser | null = null;
     try {
       // Ruta específica del ejecutable de Chromium
-      const executablePath = '/usr/bin/chromium-browser'; // Ajusta esta ruta si es necesario
+      const executablePath = '/usr/bin/google-chrome'; // Ajusta esta ruta si es necesario
 
       browser = await puppeteer.launch({
         executablePath, // Especifica la ruta al navegador
