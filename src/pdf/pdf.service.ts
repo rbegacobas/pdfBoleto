@@ -32,21 +32,41 @@ export class PdfService {
  private createTemplateVariables(pdfRequestDto: PdfRequestDto): TemplateVariables {
   const entryDate = new Date(pdfRequestDto.entryDate);
   const exitDate = new Date(pdfRequestDto.exitDate);
-  console.log('Valor de entrada:', entryDate);
-  console.log('Valor de entrada2:', this.formatDate(entryDate));
-
+  // Conversión segura a número
+  const adultos = parseInt(pdfRequestDto.adultos, 10) || 0;
+  const kids = parseInt(pdfRequestDto.kids, 10) || 0;
+  const noches = this.calculateNights(entryDate, exitDate);
+  // Calcular grupo
+  let grupo = `${adultos} adultos`;
+  if (kids > 0) {
+    grupo += ` y ${kids} ninos`;
+  }
+  // Calcular cantidad total de personas
+  const cantPersonas = (adultos + kids).toString();
+  // Calcular precio estimado (ejemplo: 20 euros por persona por noche)
+  const precioBase = 20; // precio estimado por persona por noche
+  const precio = (precioBase * (adultos + kids) * noches);
+  // Calcular IVA (16%)
+  const iva = precio * 0.16;
+  // Calcular precio final
+  const precioFinal = precio + iva;
   return {
     name: pdfRequestDto.name,
-      Entrada: this.formatDate(entryDate),
-      Penalty: this.calculatePenalty(entryDate),
-      randomNumber: this.generateRandomNumber(),
-      dayEntrada: entryDate.getDate().toString(),
-      monthEntrada: this.getMonthName(entryDate),
-      weekdayEntrada: this.getWeekdayName(entryDate),
-      daySalida: exitDate.getDate().toString(),
-      monthSalida: this.getMonthName(exitDate),
-      weekdaySalida: this.getWeekdayName(exitDate),
-      noches: this.calculateNights(entryDate, exitDate).toString(),
+    Entrada: this.formatDate(entryDate),
+    Penalty: this.calculatePenalty(entryDate),
+    randomNumber: this.generateRandomNumber(),
+    dayEntrada: entryDate.getDate().toString(),
+    monthEntrada: this.getMonthName(entryDate),
+    weekdayEntrada: this.getWeekdayName(entryDate),
+    daySalida: exitDate.getDate().toString(),
+    monthSalida: this.getMonthName(exitDate),
+    weekdaySalida: this.getWeekdayName(exitDate),
+    noches: noches.toString(),
+    grupo,
+    cantPersonas,
+    precio: precio.toFixed(2),
+    iva: iva.toFixed(2),
+    precioFinal: precioFinal.toFixed(2),
   };
 }
 
@@ -124,15 +144,20 @@ private calculateNights(entryDate: Date, exitDate: Date): number {
 }
 
 interface TemplateVariables {
-name: string;
-Entrada: string;
-Penalty: string;
-randomNumber: string;
-dayEntrada: string;
-monthEntrada: string;
-weekdayEntrada: string;
-daySalida: string;
-monthSalida: string;
-weekdaySalida: string;
-noches: string;
+  name: string;
+  Entrada: string;
+  Penalty: string;
+  randomNumber: string;
+  dayEntrada: string;
+  monthEntrada: string;
+  weekdayEntrada: string;
+  daySalida: string;
+  monthSalida: string;
+  weekdaySalida: string;
+  noches: string;
+  grupo: string;
+  cantPersonas: string;
+  precio: string;
+  iva: string;
+  precioFinal: string;
 }

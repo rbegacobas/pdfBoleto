@@ -18,4 +18,10 @@ export class PdfRequestDto {
 
   @IsDateString()
   exitDate: string;
+
+  @IsString()
+  adultos: string;
+
+  @IsString()
+  kids: string;
 }

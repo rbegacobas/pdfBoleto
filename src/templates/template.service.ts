@@ -14,6 +14,11 @@ type TemplateVariables = {
   monthSalida: string;
   weekdaySalida: string;
   noches: string;
+  grupo: string;
+  cantPersonas: string;
+  precio: string;
+  iva: string;
+  precioFinal: string;
 };
 
 @Injectable()
