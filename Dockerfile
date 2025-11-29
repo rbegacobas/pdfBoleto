@@ -3,15 +3,7 @@ FROM node:18
 
 # Instalar dependencias necesarias para Puppeteer
 RUN apt-get update && apt-get install -y \
-  wget \
-  gnupg \
-  ca-certificates \
-    --no-install-recommends && \
-    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get update && \
-    apt-get install -y \
-    google-chrome-stable \
+  chromium \
   fonts-liberation \
   libappindicator3-1 \
   libatk-bridge2.0-0 \
@@ -27,7 +19,12 @@ RUN apt-get update && apt-get install -y \
   libxss1 \
   libasound2 \
   libcups2 \
+  --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
+
+# Configurar variable de entorno para Puppeteer
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Configurar la carpeta de trabajo
 WORKDIR /app

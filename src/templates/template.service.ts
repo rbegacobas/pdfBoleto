@@ -61,7 +61,12 @@ export class TemplateService implements OnModuleInit {
 
   fillTemplate(template: string, variables: TemplateVariables): string {
     return template.replace(/{{(\w+)}}/g, (_, key) => {
-      return variables[key] || '';
+      const value = variables[key] || '';
+      // Si es el campo 'name', convertir saltos de línea en <br>
+      if (key === 'name') {
+        return value.replace(/\n/g, '<br>');
+      }
+      return value;
     });
   }
 }

@@ -8,11 +8,11 @@ export class PdfGeneratorUtil {
   async generatePdf(html: string): Promise<Buffer> {
     let browser: puppeteer.Browser | null = null;
     try {
-      // Ruta específica del ejecutable de Chromium
-      const executablePath = '/usr/bin/google-chrome'; // Ajusta esta ruta si es necesario
+      // Usar variable de entorno o ruta por defecto
+      const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium';
 
       browser = await puppeteer.launch({
-        executablePath, // Especifica la ruta al navegador
+        executablePath,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
       });
 

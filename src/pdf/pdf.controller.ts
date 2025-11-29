@@ -23,7 +23,10 @@ export class PdfController {
       
       const pdfBuffer = await this.pdfService.generatePdf(pdfRequestDto);
       
-      const fileName = `${pdfRequestDto.country}_${pdfRequestDto.name}_${Date.now()}.pdf`;
+      // Sanitizar el nombre para el archivo: usar solo el primer nombre y remover caracteres inválidos
+      const firstName = pdfRequestDto.name.split('\n')[0].trim();
+      const sanitizedName = firstName.replace(/[^a-zA-Z0-9_\-]/g, '_');
+      const fileName = `${pdfRequestDto.country}_${sanitizedName}_${Date.now()}.pdf`;
       
       res.set({
         'Content-Type': 'application/pdf',

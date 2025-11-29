@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Generador PDF</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Generador de PDF</h1>
+
+      <form id="pdf-form">
+        <label for="country">País</label>
+        <select id="country" name="country">
+          <option value="MGA">MGA</option>
+          <option value="GEO">GEO</option>
+          <option value="PBM">PBM</option>
+        </select>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <label>Nombres de Pasajeros</label>
+          <button type="button" id="addPassenger" style="padding: 5px 15px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+            + Agregar Pasajero
+          </button>
+        </div>
+        <div id="passengerList">
+          <div class="passenger-row" data-index="0">
+            <input
+              type="text"
+              name="passenger-0"
+              placeholder="NOMBRE APELLIDO"
+              required
+              style="flex: 1;"
+            />
+          </div>
+        </div>
+
+        <label for="entryDate">Entrada</label>
+        <input id="entryDate" name="entryDate" type="date" required />
+
+        <label for="exitDate">Salida</label>
+        <input id="exitDate" name="exitDate" type="date" required />
+
+        <button id="generate" type="submit">Generar PDF</button>
+      </form>
+
+      <div id="status" class="status hidden"></div>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
