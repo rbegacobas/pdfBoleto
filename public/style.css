@@ -1,9 +1,9 @@
 * { box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#f6f7fb; margin:0; padding:20px; }
-.container { max-width:720px; margin:0 auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 4px 14px rgba(20,20,40,0.06); }
+.container { max-width:900px; margin:0 auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 4px 14px rgba(20,20,40,0.06); }
 h1{margin:0 0 18px; font-size:20px}
 form { display:flex; flex-direction:column; gap:10px }
-label { font-size:13px; color:#333 }
+label { font-size:13px; color:#333; font-weight: 600; }
 input, select, button { padding:10px; font-size:16px; border-radius:6px; border:1px solid #e6e9ef }
 button { background:#2563eb; color:#fff; border:none; cursor:pointer }
 button:disabled { opacity:0.6; cursor:default }
@@ -15,4 +15,236 @@ button:disabled { opacity:0.6; cursor:default }
 .passenger-row input { flex: 1; }
 .delete-btn { padding: 8px 12px; background: #dc2626; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; }
 .delete-btn:hover { background: #b91c1c; }
-@media (max-width:520px){ .container{padding:14px} input,select,button{font-size:15px} }
+
+/* Estilos para el calendario Cally */
+.date-input-wrapper {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.date-input {
+  width: 100%;
+  padding: 12px;
+  background: white;
+  border: 1px solid #e6e9ef;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.date-input:hover {
+  border-color: #2563eb;
+  background: #fafbfc;
+}
+
+.calendar-icon {
+  width: 20px;
+  height: 20px;
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.date-input span {
+  flex: 1;
+}
+
+.calendar-popover {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e6e9ef;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  z-index: 1000;
+  min-width: 650px;
+}
+
+/* Estilizar el contenedor de meses usando Shadow Parts */
+calendar-range::part(months) {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+calendar-month {
+  display: block;
+  flex: 1;
+  min-width: 280px;
+}
+
+.calendar-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e6e9ef;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+calendar-range svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  cursor: pointer;
+  color: #2563eb;
+}
+
+calendar-range svg:hover {
+  color: #1d4ed8;
+}
+
+calendar-month {
+  display: block;
+}
+
+/* Estilos para los días del calendario */
+calendar-range::part(button) {
+  aspect-ratio: 1;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+calendar-range::part(button):hover {
+  background: #e0e7ff;
+}
+
+calendar-range::part(button):disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+
+calendar-range::part(button):disabled:hover {
+  background: transparent;
+}
+
+/* Día actual */
+calendar-range::part(today) {
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* Días seleccionados */
+calendar-range::part(selected) {
+  background: #2563eb;
+  color: white;
+}
+
+calendar-range::part(selected):hover {
+  background: #1d4ed8;
+}
+
+/* Rango entre fechas */
+calendar-range::part(in-range) {
+  background: #dbeafe;
+  color: #1e40af;
+  border-radius: 0;
+}
+
+calendar-range::part(range-start) {
+  background: #2563eb;
+  color: white;
+  border-radius: 6px 0 0 6px;
+}
+
+calendar-range::part(range-end) {
+  background: #2563eb;
+  color: white;
+  border-radius: 0 6px 6px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container { max-width: 720px; padding: 14px; }
+  
+  .calendar-popover {
+    left: -10px;
+    right: -10px;
+    padding: 15px;
+    min-width: auto;
+  }
+  
+  calendar-range::part(months) {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  calendar-month {
+    min-width: auto;
+  }
+}
+
+@media (max-width:520px){ 
+  input, select, button { font-size:15px; }
+  
+  .date-input {
+    padding: 10px;
+    font-size: 15px;
+  }
+  
+  .calendar-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .calendar-popover {
+    padding: 12px;
+  }
+  
+  calendar-range::part(months) {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  calendar-range::part(button) {
+    padding: 6px;
+  }
+}
